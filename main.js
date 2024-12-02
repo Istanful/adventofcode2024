@@ -31,7 +31,7 @@ days.forEach((day) => {
   }
 
   if (solutions.part2.answer === day.part2.answer) {
-    output += `| ★  |`;
+    output += `| ★  |\n`;
   } else {
     console.log(`Got ${day.name} part 2 answer: ${solutions.part2.answer}`);
     output += `| ☆  |\n`;
