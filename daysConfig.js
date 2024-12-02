@@ -12,4 +12,15 @@ module.exports = [
       input: fs.readFileSync("./inputs/day01part1.txt", "utf8"),
     },
   },
+  {
+    name: "day02",
+    part1: {
+      answer: 680,
+      input: fs.readFileSync("./inputs/day02part1.txt", "utf8"),
+    },
+    part2: {
+      answer: 710,
+      input: fs.readFileSync("./inputs/day02part1.txt", "utf8"),
+    },
+  },
 ];

@@ -1,4 +1,5 @@
 const days = require("./daysConfig");
+const Runner = require("./Runner");
 const fs = require("node:fs");
 
 let output = "";
@@ -11,7 +12,14 @@ output += `| --- | ------ | ------ |\n`;
 
 days.forEach((day) => {
   console.log(`Solving ${day.name}...`);
-  const daySolver = require(`./${day.name}/index.js`);
+  let daySolver = null;
+
+  try {
+    daySolver = require(`./${day.name}/index.js`);
+  } catch (e) {
+    daySolver = new Runner.Node();
+  }
+
   const solutions = daySolver.solve(day);
   output += `| ${day.name} `;
 
@@ -26,7 +34,7 @@ days.forEach((day) => {
     output += `| ★  |`;
   } else {
     console.log(`Got ${day.name} part 2 answer: ${solutions.part2.answer}`);
-    output += `| ☆  |`;
+    output += `| ☆  |\n`;
   }
 });
 
