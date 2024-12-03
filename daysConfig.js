@@ -23,4 +23,15 @@ module.exports = [
       input: fs.readFileSync("./inputs/day02part1.txt", "utf8"),
     },
   },
+  {
+    name: "day03",
+    part1: {
+      answer: 157621318,
+      input: fs.readFileSync("./inputs/day03part1.txt", "utf8"),
+    },
+    part2: {
+      answer: 79845780,
+      input: fs.readFileSync("./inputs/day03part1.txt", "utf8"),
+    },
+  },
 ];
