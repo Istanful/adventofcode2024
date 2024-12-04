@@ -1,6 +1,54 @@
+const { execSync } = require("node:child_process");
 const fs = require("node:fs");
 
 const sessionCookie = fs.readFileSync("./sessionCookie.txt", "utf8").trim();
+
+class RubyRunner {
+  async solve(dayConfig) {
+    const { input } = dayConfig;
+
+    const part1Answer = execSync(
+      `ruby ${this.getSolutionPath(dayConfig, 1)} "${input}"`
+    ).toString("utf8");
+    const part2Answer = execSync(
+      `ruby ${this.getSolutionPath(dayConfig, 2)}`
+    ).toString("utf8");
+    console.log(part1Answer);
+
+    return {
+      part1: { answer: part1Answer },
+      part2: { answer: part2Answer },
+    };
+  }
+
+  getSolutionPath(dayConfig, part) {
+    return `${__dirname}/${dayConfig.name}/part_${part}.rb`;
+  }
+
+  getTemplates(dayConfig) {
+    const getcontent = (part) => {
+      const modName = `Day${dayConfig.number}Part${part}`;
+      return [
+        `module ${modName}`,
+        `  def self.solve(input)`,
+        `  end`,
+        `end`,
+        ``,
+        `puts ${modName}.solve(ARGV[0])`,
+      ].join("\n");
+    };
+    return [
+      {
+        path: this.getSolutionPath(dayConfig, 1),
+        content: getcontent(1),
+      },
+      {
+        path: this.getSolutionPath(dayConfig, 2),
+        content: getcontent(2),
+      },
+    ];
+  }
+}
 
 class NodeRunner {
   async solve(dayConfig) {
@@ -54,4 +102,5 @@ class NodeRunner {
 
 module.exports = {
   Node: NodeRunner,
+  Ruby: RubyRunner,
 };

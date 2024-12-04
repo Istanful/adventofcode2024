@@ -57,6 +57,7 @@ async function getInput({ name, dayNumber }) {
   const inputPath = `${__dirname}/${name}/input.txt`;
 
   if (!fs.existsSync(inputPath)) {
+    console.log(`Fetching puzzle input for ${name}...`);
     const url = `https://adventofcode.com/2024/day/${dayNumber}/input`;
     const newInput = await fetch(url, {
       headers: {
