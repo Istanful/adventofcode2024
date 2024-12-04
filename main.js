@@ -10,30 +10,36 @@ output += "\n";
 output += `| Day | Part 1 | Part 2 |\n`;
 output += `| --- | ------ | ------ |\n`;
 
-days.forEach((day) => {
-  console.log(`Solving ${day.name}...`);
-  let daySolver = null;
+days.forEach(async (day, i) => {
+  const dayNumber = i + 1;
+  const dayName = `day${dayNumber.toString().padStart(2, "0")}`;
+  console.log(`Solving ${dayName}...`);
+  let runner = null;
 
   try {
-    daySolver = require(`./${day.name}/index.js`);
+    runner = require(`./${dayName}/index.js`);
   } catch (e) {
-    daySolver = new Runner.Node();
+    runner = new Runner.Node();
   }
 
-  const solutions = daySolver.solve(day);
-  output += `| ${day.name} `;
+  const solutions = await runner.solve({
+    ...day,
+    name: dayName,
+    number: dayNumber,
+  });
+  output += `| ${dayNumber} `;
 
   if (solutions.part1.answer === day.part1.answer) {
     output += `| ★ `;
   } else {
-    console.log(`Got ${day.name} part 1 answer: ${solutions.part1.answer}`);
+    console.log(`Got ${dayNumber} part 1 answer: ${solutions.part1.answer}`);
     output += `| ☆ `;
   }
 
   if (solutions.part2.answer === day.part2.answer) {
     output += `| ★  |\n`;
   } else {
-    console.log(`Got ${day.name} part 2 answer: ${solutions.part2.answer}`);
+    console.log(`Got ${dayNumber} part 2 answer: ${solutions.part2.answer}`);
     output += `| ☆  |\n`;
   }
 });
