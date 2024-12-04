@@ -41,10 +41,21 @@ async function run() {
     }
 
     const solutions = await runner.solve(dayConfig);
+    const hasCorrectPart1 = solutions.part1.answer === day.part1.answer;
+    const hasCorrectPart2 = solutions.part2.answer === day.part2.answer;
+
+    if (!hasCorrectPart1) {
+      console.log(`Got ${dayName} part 1 answer: ${solutions.part1.answer}`);
+    }
+
+    if (!hasCorrectPart2) {
+      console.log(`Got ${dayName} part 2 answer: ${solutions.part2.answer}`);
+    }
+
     statRows.push([
       dayName,
-      solutions.part1.answer === day.part1.answer ? "★ " : "☆ ",
-      solutions.part2.answer === day.part2.answer ? "★ " : "☆ ",
+      hasCorrectPart1 ? "★ " : "☆ ",
+      hasCorrectPart2 ? "★ " : "☆ ",
     ]);
   }
 

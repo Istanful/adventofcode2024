@@ -13,7 +13,6 @@ class RubyRunner {
     const part2Answer = execSync(
       `ruby ${this.getSolutionPath(dayConfig, 2)}`
     ).toString("utf8");
-    console.log(part1Answer);
 
     return {
       part1: { answer: part1Answer },
