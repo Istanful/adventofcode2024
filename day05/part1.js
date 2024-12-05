@@ -1,3 +1,6 @@
+const { isValidUpdate } = require("./isValidUpdate");
+const { parseInput } = require("./parseInput");
+
 const example = `
 47|53
 97|13
@@ -35,35 +38,12 @@ console.assert(
 );
 
 function solve(input) {
-  const [rulesStr, updatesStr] = input.trim().split("\n\n");
-  const rules = rulesStr.split("\n").map((rule) => {
-    return rule.split("|").map((num) => parseInt(num, 10));
-  });
-
-  const updates = updatesStr.split("\n").map((update) => {
-    const numbers = update.split(",").map((num) => parseInt(num, 10));
-    const indices = numbers.reduce((acc, num, i) => {
-      return { ...acc, [num]: i };
-    }, {});
-    return { numbers, indices };
-  });
+  const { rules, updates } = parseInput(input);
 
   let sum = 0;
 
   for (let update of updates) {
-    let isValid = true;
-
-    for (let rule of rules) {
-      const [first, second] = rule;
-
-      isValid =
-        isValid === true &&
-        (update.indices[first] === undefined ||
-          update.indices[second] === undefined ||
-          update.indices[first] < update.indices[second]);
-    }
-
-    if (!isValid) {
+    if (!isValidUpdate(update, rules)) {
       continue;
     }
 
