@@ -1,3 +1,6 @@
+const { parseInput } = require("./parseInput");
+const { raycast } = require("./raycast");
+
 const example = `
 ....#.....
 .........#
@@ -23,32 +26,6 @@ function assertEquals(actual, expected) {
 }
 
 assertEquals(solve(example), 42);
-
-function parseInput(input) {
-  let result = { boardSize: { x: 0, y: 0 }, obstacles: [], guard: null };
-  const rows = input.trim().split("\n");
-  result.boardSize.y = rows.length;
-
-  for (let y = 0; y < rows.length; y++) {
-    const row = rows[y];
-    const chars = row.split("");
-    result.boardSize.x = chars.length;
-
-    for (let x = 0; x < chars.length; x++) {
-      const char = chars[x];
-
-      switch (char) {
-        case "#":
-          result.obstacles.push({ x, y, type: char });
-          break;
-        case "^":
-          result.guard = { x, y, type: char, direction: { x: 0, y: -1 } };
-      }
-    }
-  }
-
-  return result;
-}
 
 function solve(input) {
   const { boardSize, obstacles, guard } = parseInput(input);
@@ -91,53 +68,6 @@ function solve(input) {
   }
 
   return visited.size + 1;
-}
-
-function raycast(source, direction, targets) {
-  let hits = [];
-  let k = direction.y / direction.x;
-  let isVertical = direction.x === 0;
-
-  const m = source.y - k * source.x;
-
-  for (let target of targets) {
-    if (!isVertical) {
-      const isHit = target.x * k + m === target.y;
-      const hitDir = {
-        x: Math.sign(target.x - source.x),
-        y: Math.sign(target.y - source.y),
-      };
-
-      if (isHit && hitDir.x === direction.x && hitDir.y === direction.y) {
-        hits.push(target);
-      }
-
-      continue;
-    }
-
-    if (direction.y > 0) {
-      const isHit = target.x === source.x && target.y > source.y;
-
-      if (isHit) {
-        hits.push(target);
-      }
-
-      continue;
-    }
-
-    const isHit = target.x === source.x && target.y < source.y;
-    if (isHit) {
-      hits.push(target);
-    }
-  }
-
-  const closest = hits.sort((a, b) => {
-    const aDistance = Math.abs(a.x - source.x) + Math.abs(a.y - source.y);
-    const bDistance = Math.abs(b.x - source.x) + Math.abs(b.y - source.y);
-    return aDistance - bDistance;
-  })[0];
-
-  return closest;
 }
 
 assertEquals(

@@ -55,11 +55,16 @@ async function run() {
     statRows.push([
       dayName,
       hasCorrectPart1 ? "★ " : "☆ ",
+      `${solutions.part1.elapsed}ms`,
       hasCorrectPart2 ? "★ " : "☆ ",
+      `${solutions.part2.elapsed}ms`,
     ]);
   }
 
-  output += table([["Day", "Part 1", "Part 2"], ...statRows]);
+  output += table([
+    ["Day", "Part 1", "Part 1 took", "Part 2", "Part 2 took"],
+    ...statRows,
+  ]);
 
   fs.writeFileSync(`./README.md`, output, "utf8");
 }

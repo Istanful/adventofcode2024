@@ -49,19 +49,31 @@ class RubyRunner {
   }
 }
 
+function bm(func) {
+  const startsAt = new Date();
+  const result = func();
+  const endsAt = new Date();
+  return {
+    result,
+    elapsed: endsAt.getTime() - startsAt.getTime(),
+  };
+}
+
 class NodeRunner {
   async solve(dayConfig) {
     const { input } = dayConfig;
 
-    const part1Answer = this.run(this.solutionPath(dayConfig, 1), input);
-    const part2Answer = this.run(this.solutionPath(dayConfig, 2), input);
+    const part1 = this.run(this.solutionPath(dayConfig, 1), input);
+    const part2 = this.run(this.solutionPath(dayConfig, 2), input);
 
     return {
       part1: {
-        answer: part1Answer,
+        answer: part1.result,
+        elapsed: part1.elapsed,
       },
       part2: {
-        answer: part2Answer,
+        answer: part2.result,
+        elapsed: part2.elapsed,
       },
     };
   }
@@ -92,7 +104,7 @@ class NodeRunner {
   run(path, input) {
     try {
       const func = require(path);
-      return func(input);
+      return bm(() => func(input));
     } catch (e) {
       return undefined;
     }
