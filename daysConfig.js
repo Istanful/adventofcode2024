@@ -19,4 +19,8 @@ module.exports = [
     part1: { answer: 6951 },
     part2: { answer: 4121 },
   },
+  {
+    part1: { answer: 4819 },
+    part2: { answer: null },
+  },
 ];

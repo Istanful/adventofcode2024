@@ -75,6 +75,7 @@ async function getInput({ name, dayNumber }) {
         cookie: sessionCookie,
       },
     }).then((response) => response.text());
+    fs.mkdirSync(`${__dirname}/${name}`);
     fs.writeFileSync(inputPath, newInput, "utf8");
     return newInput;
   }
