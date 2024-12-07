@@ -25,6 +25,6 @@ module.exports = [
   },
   {
     part1: { answer: 1582598718861 },
-    part2: { answer: null },
+    part2: { answer: 165278151522644 },
   },
 ];
