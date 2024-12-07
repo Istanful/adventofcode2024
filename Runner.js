@@ -106,6 +106,7 @@ class NodeRunner {
       const func = require(path);
       return bm(() => func(input));
     } catch (e) {
+      console.log(`${path} threw err: ${e}`);
       return undefined;
     }
   }
